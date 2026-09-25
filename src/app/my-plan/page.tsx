@@ -1,11 +1,16 @@
-import React from 'react';
+import { Suspense } from "react";
+import { getAllLibrary } from "@/lib/apps";
+import { TApp } from "@/types/apps.type";
+import MyPlanClient from "@/components/shared/MyPlanClient";
 
-const page = () => {
+const MyPlanPage = async () => {
+    const allApps: TApp[] = await getAllLibrary();
+
     return (
-        <div>
-            My Plan
-        </div>
+        <Suspense>
+            <MyPlanClient allApps={allApps} />
+        </Suspense>
     );
 };
 
-export default page;
+export default MyPlanPage;

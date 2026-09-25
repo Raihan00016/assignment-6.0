@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import { CiClock2, CiStar } from "react-icons/ci";
 import { FaFire } from "react-icons/fa";
@@ -9,15 +10,15 @@ type AppCardProps = {
 
 const AppCard = ({ app }: AppCardProps) => {
   return (
-    <div className="bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-colors">
-  
+    <Link
+      href={`/${app.id}`}
+      className="block bg-zinc-900 rounded-xl overflow-hidden border border-zinc-800 hover:border-zinc-700 transition-colors"
+    >
       <div className="relative w-full h-44">
         <Image src={app.image} alt={app.name} fill className="object-cover" />
       </div>
 
-     
       <div className="p-4">
-       
         <div className="flex flex-wrap gap-2 mb-3">
           {app.muscleGroups.map((group) => (
             <span
@@ -29,7 +30,6 @@ const AppCard = ({ app }: AppCardProps) => {
           ))}
         </div>
 
-        
         <h3 className="text-white font-bold text-base">{app.name}</h3>
         <p className="text-zinc-500 text-xs mt-0.5">{app.equipment}</p>
 
@@ -48,7 +48,7 @@ const AppCard = ({ app }: AppCardProps) => {
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
