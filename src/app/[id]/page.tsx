@@ -77,7 +77,7 @@ const AppDetails = async ({ params }: TAppDetailsProps) => {
                         </ol>
                     </div>
 
-                    <WorkoutActions id={app.id} />
+                    <WorkoutActions id={app.id} name={app.name} />
                 </div>
             </div>
         </div>

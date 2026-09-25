@@ -50,50 +50,48 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
         if (hydrated) localStorage.setItem(DONE_KEY, JSON.stringify(doneIds));
     }, [doneIds, hydrated]);
 
+
     const togglePlan = (id: number, name?: string) => {
-        setPlanIds((prev) => {
-            const exists = prev.includes(id);
+        const exists = planIds.includes(id);
 
-            if (!exists && prev.length >= MAX_PLAN_ITEMS) {
-                toast.warning(
-                    `Today's plan is full (max ${MAX_PLAN_ITEMS}). Finish or remove one first.`
-                );
-                return prev;
-            }
-
-            toast[exists ? "info" : "success"](
-                exists
-                    ? `${name ?? "Workout"} removed from today's plan`
-                    : `${name ?? "Workout"} added to today's plan`
+        if (!exists && planIds.length >= MAX_PLAN_ITEMS) {
+            toast.warning(
+                `Today's plan is full (max ${MAX_PLAN_ITEMS}). Finish or remove one first.`
             );
+            return;
+        }
 
-            if (exists) {
-                // also clear its "done" status when it leaves the plan
-                setDoneIds((d) => d.filter((p) => p !== id));
-                return prev.filter((p) => p !== id);
-            }
-            return [...prev, id];
-        });
+        if (exists) {
+            setPlanIds((prev) => prev.filter((p) => p !== id));
+            setDoneIds((prev) => prev.filter((p) => p !== id));
+            toast.info(`${name ?? "Workout"} removed from today's plan`);
+        } else {
+            setPlanIds((prev) => [...prev, id]);
+            toast.success(`${name ?? "Workout"} added to today's plan`);
+        }
     };
 
     const toggleSaved = (id: number, name?: string) => {
-        setSavedIds((prev) => {
-            const exists = prev.includes(id);
-            toast[exists ? "info" : "success"](
-                exists
-                    ? `${name ?? "Workout"} removed from saved`
-                    : `${name ?? "Workout"} saved for later`
-            );
-            return exists ? prev.filter((p) => p !== id) : [...prev, id];
-        });
+        const exists = savedIds.includes(id);
+
+        if (exists) {
+            setSavedIds((prev) => prev.filter((p) => p !== id));
+            toast.info(`${name ?? "Workout"} removed from saved`);
+        } else {
+            setSavedIds((prev) => [...prev, id]);
+            toast.success(`${name ?? "Workout"} saved for later`);
+        }
     };
 
     const markDone = (id: number, name?: string) => {
-        setDoneIds((prev) => {
-            const exists = prev.includes(id);
-            if (!exists) toast.success(`${name ?? "Workout"} marked as done 💪`);
-            return exists ? prev.filter((p) => p !== id) : [...prev, id];
-        });
+        const exists = doneIds.includes(id);
+
+        if (exists) {
+            setDoneIds((prev) => prev.filter((p) => p !== id));
+        } else {
+            setDoneIds((prev) => [...prev, id]);
+            toast.success(`${name ?? "Workout"} marked as done 💪`);
+        }
     };
 
     const isInPlan = (id: number) => planIds.includes(id);
