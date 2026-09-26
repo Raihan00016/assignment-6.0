@@ -1,16 +1,11 @@
-import { TApp } from "@/types/apps.type";
+
+
+
+import { getAllLibrary } from "@/lib/apps";
 import AppCard from "../shared/Appcard";
 
-
-
-const getAllLibrary = async () => {
-  const res = await fetch("https://api.abcz.workers.dev/api/fitlog");
-  const data = await res.json();
-  return data;
-};
-
 const Library = async () => {
-  const data: TApp[] = await getAllLibrary();
+  const data = await getAllLibrary();
 
   return (
     <div className="container mx-auto px-4 sm:px-6 py-10">
@@ -25,7 +20,7 @@ const Library = async () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {data.slice(0, 6).map((app) => (
-          <AppCard key={app.id} app={app}/>
+          <AppCard key={app.id} app={app} />
         ))}
       </div>
     </div>
