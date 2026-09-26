@@ -42,17 +42,6 @@ FitLog lets users browse a library of workouts pulled from a live API, view deta
 
 ---
 
-## 📦 Deployment
-
-This project is deployed on **Vercel**. To deploy your own instance:
-
-1. Push the repository to GitHub.
-2. Import the project into [Vercel](https://vercel.com/new).
-3. Add the `NEXT_PUBLIC_API_URL` environment variable in the Vercel project settings.
-4. Deploy 🚀
-
----
-
 ## 📄 License
 
 This project was built for educational/assignment purposes.
